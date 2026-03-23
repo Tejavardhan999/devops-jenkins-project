@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = "yourdockerhub/devops-app"
+        DOCKER_IMAGE = "tejavardhan0987/devops-app"
     }
 
     stages {
@@ -28,7 +28,7 @@ pipeline {
         stage('Login to DockerHub') {
             steps {
                 withCredentials([string(credentialsId: 'docker-pass', variable: 'PASS')]) {
-                    sh 'echo $PASS | docker login -u yourdockerhub --password-stdin'
+                    sh 'echo $PASS | docker login -u tejavardhan0987 --password-stdin'
                 }
             }
         }
@@ -43,7 +43,7 @@ pipeline {
             steps {
                 sh '''
                 ssh -o StrictHostKeyChecking=no ubuntu@<EC2-IP> '
-                docker pull yourdockerhub/devops-app:latest &&
+                docker pull tejavardhan0987/devops-app:latest &&
                 docker stop app || true &&
                 docker rm app || true &&
                 docker run -d -p 3000:3000 --name app yourdockerhub/devops-app:latest
